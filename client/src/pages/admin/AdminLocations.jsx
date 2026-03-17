@@ -3,7 +3,7 @@ import axios from "axios";
 import "./AdminLocations.css";
 
 function AdminLocations() {
-
+const [states, setStates] = useState([]);
 const [streams,setStreams] = useState([]);
 const [colleges,setColleges] = useState([]);
 const [filteredColleges,setFilteredColleges] = useState([]);
@@ -45,6 +45,20 @@ const res = await axios.get("https://collegechale.onrender.com/api/colleges");
 
 setColleges(res.data);
 setFilteredColleges(res.data);
+
+// Unique states extract
+const uniqueStates = [
+  ...new Set(
+    res.data
+      .map((c) => {
+        const parts = c.location?.split(",");
+        return parts.length > 1 ? parts[1].trim() : parts[0]?.trim();
+      })
+      .filter(Boolean)
+  ),
+];
+
+setStates(uniqueStates);
 
 }catch(err){
 console.log(err);
@@ -130,15 +144,21 @@ return(
 <div className="form-row">
 <label>State</label>
 
-<input
-placeholder="Enter State"
-value={state}
-onChange={(e)=>setState(e.target.value)}
-/>
+<select value={state} onChange={(e)=>setState(e.target.value)}>
+
+<option value="">Select State</option>
+
+{states.map((s, index)=>(
+<option key={index} value={s}>
+{s}
+</option>
+))}
+
+</select>
 </div>
 
 
-<h3 className="section-title">Top Colleges</h3>
+<h3 className="section-title">Top Universities/Colleges</h3>
 
 <div className="college-list">
 
@@ -169,7 +189,7 @@ setTop(top.filter(id=>id!==c._id));
 </div>
 
 
-<h3 className="section-title">Popular Colleges</h3>
+<h3 className="section-title">Popular Universities/Colleges</h3>
 
 <div className="college-list">
 

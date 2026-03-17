@@ -78,7 +78,7 @@ const HomePage = () => {
 
       {/* PROCESS SECTION */}
       <section className="py-12 md:py-20 bg-gray-100">
-        <div className="max-w-6xl mx-auto text-center px-4">
+        <div className="max-w-7xl xl:max-w-[1400px] mx-auto text-center px-4">
           {/* Heading */}
           <h2 className="text-2xl md:text-4xl font-bold mb-4">
             Choosing the right college can be confusing
@@ -89,19 +89,19 @@ const HomePage = () => {
           </p>
 
           {/* Steps Wrapper */}
-          <div className="flex justify-center overflow-x-auto pb-4">
-            <div className="flex items-center gap-4 md:gap-6 min-w-max">
+          <div className="w-full overflow-x-auto lg:overflow-visible pb-4">
+            <div className="flex items-center gap-3 md:gap-4 w-max lg:w-full lg:justify-center px-2">
               {steps.map((step, index) => (
-                <div key={index} className="flex items-center">
+                <div key={index} className="flex items-center flex-shrink-0">
                   {/* Step Box */}
                   <div
                     onClick={() => setActiveStep(index)}
-                    className={`flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 rounded-lg border cursor-pointer whitespace-nowrap transition text-sm md:text-base
-                    ${
-                      index <= activeStep
-                        ? "bg-green-200 border-green-500 text-green-800"
-                        : "bg-gray-100 border-gray-300 text-gray-600"
-                    }`}
+                    className={`flex items-center gap-2 px-3 md:px-4 py-2 md:py-2.5 rounded-lg border cursor-pointer whitespace-nowrap transition text-sm md:text-base
+  ${
+    index <= activeStep
+      ? "bg-green-200 border-green-500 text-green-800"
+      : "bg-gray-100 border-gray-300 text-gray-600"
+  }`}
                   >
                     <span className="text-base md:text-lg">
                       {index <= activeStep ? "✔" : "○"}
@@ -112,7 +112,7 @@ const HomePage = () => {
 
                   {/* Connector Line */}
                   {index !== steps.length - 1 && (
-                    <div className="w-8 md:w-12 h-[2px] bg-gray-300"></div>
+                    <div className="w-6 md:w-8 h-[2px] bg-gray-300 flex-shrink-0"></div>
                   )}
                 </div>
               ))}

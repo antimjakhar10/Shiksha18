@@ -1,31 +1,31 @@
 const mongoose = require("mongoose");
 
-const megaMenuSchema = new mongoose.Schema({
+const MegaMenuSchema = new mongoose.Schema({
 
-stream:{
-type:String,
-required:true
-},
+  stream: {
+    type: String,
+    required: true
+  },
 
-state:{
-type:String,
-required:true
-},
+  state: {
+    type: String,
+    required: true
+  },
 
-topColleges:[
-{
-type:mongoose.Schema.Types.ObjectId,
-ref:"College"
-}
-],
+  topColleges: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "College"
+    }
+  ],
 
-popularColleges:[
-{
-type:mongoose.Schema.Types.ObjectId,
-ref:"College"
-}
-]
+  popularColleges: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "College"
+    }
+  ]
 
 });
 
-module.exports = mongoose.model("MegaMenu",megaMenuSchema);
+module.exports = mongoose.model("MegaMenu", MegaMenuSchema);

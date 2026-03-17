@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import UniversityCard from "../components/UniversityCard";
 import contactBg from "../assets/bgImage.png";
 
@@ -22,6 +22,27 @@ const CollegeList = () => {
   const perPage = 6;
 
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+
+const courseParam = searchParams.get("course");
+const streamParam = searchParams.get("stream");
+const locationParam = searchParams.get("location");
+
+if(courseParam){
+setSelectedCourse(courseParam);
+}
+
+if(streamParam){
+setSelectedStream(streamParam);
+}
+
+if(locationParam){
+setSelectedState(locationParam);
+}
+
+}, [searchParams]);
 
   useEffect(() => {
     fetch("https://collegechale.onrender.com/api/courses")
@@ -121,6 +142,7 @@ if (selectedStream) {
     }
 
     setFiltered(result);
+    setPage(1);
   }, [
     search,
     selectedCourse,
@@ -139,7 +161,7 @@ if (selectedStream) {
     <div className="bg-gray-100 pt-[120px]">
       {/* HERO */}
       <div
-        className="h-[260px] bg-cover bg-center flex flex-col items-center justify-center relative px-4"
+        className="h-[260px] bg-cover bg-center flex flex-col items-center justify-center relative px-4 mt-[4px]"
         style={{ backgroundImage: `url(${contactBg})` }}
       >
         <div className="absolute inset-0 bg-black/20"></div>
@@ -259,6 +281,24 @@ if (selectedStream) {
           {paginated.map((college) => (
             <UniversityCard key={college._id} uni={college} />
           ))}
+
+          {/* PAGINATION */}
+
+<div className="flex gap-3 justify-center pt-10 flex-wrap">
+  {[...Array(totalPages)].map((_, i) => (
+    <button
+      key={i}
+      onClick={() => setPage(i + 1)}
+      className={`px-4 py-2 border rounded ${
+        page === i + 1
+          ? "bg-blue-600 text-white"
+          : "bg-white hover:bg-gray-100"
+      }`}
+    >
+      {i + 1}
+    </button>
+  ))}
+</div>
         </div>
       </div>
     </div>

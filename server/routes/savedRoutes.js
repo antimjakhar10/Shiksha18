@@ -39,5 +39,15 @@ res.status(500).json(err);
 
 });
 
+router.delete("/:id", async (req, res) => {
+  console.log("Deleting:", req.params.id);
+
+  const deleted = await SavedCollege.findByIdAndDelete(req.params.id);
+
+  console.log("Deleted:", deleted);
+
+  res.json({ message: "Removed" });
+});
+
 
 module.exports = router;

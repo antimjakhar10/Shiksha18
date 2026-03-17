@@ -13,15 +13,17 @@ res.json(courses);
 /* ADD COURSE */
 
 router.post("/add", async(req,res)=>{
+
 const course = new Course({
-name:req.body.name
+name:req.body.name,
+stream:req.body.stream
 });
 
 await course.save();
 
 res.json(course);
-});
 
+});
 /* DELETE COURSE */
 
 router.delete("/:id", async(req,res)=>{
@@ -32,10 +34,14 @@ res.json({message:"Deleted"});
 /* UPDATE COURSE */
 
 router.put("/:id", async(req,res)=>{
+
 await Course.findByIdAndUpdate(req.params.id,{
-name:req.body.name
+name:req.body.name,
+stream:req.body.stream
 });
+
 res.json({message:"Updated"});
+
 });
 
 module.exports = router;

@@ -10,7 +10,7 @@ const Footer = () => {
         <div>
           <Link to="/">
             <h2 className="text-2xl font-bold text-white mb-4">
-              College <span className="text-green-500">Chale</span>
+              Shiksha <span className="text-green-500">18</span>
             </h2>
           </Link>
 
@@ -132,14 +132,14 @@ const Footer = () => {
           <h3 className="text-white font-semibold mb-4">Contact Us</h3>
           <p className="text-sm mb-2">📍 Office N0. 531, Mandi, Himachal Pradesh</p>
           <p className="text-sm mb-2">📞 +91 9857002222</p>
-          <p className="text-sm">📧 support@collegechale.com</p>
+          <p className="text-sm">📧 support@shiksha18.com</p>
         </div>
 
       </div>
 
       {/* Bottom Line */}
       <div className="border-t border-gray-700 mt-12 pt-6 text-center text-sm text-gray-400">
-        © {new Date().getFullYear()} College Chale. All rights reserved.
+        © {new Date().getFullYear()} Shiksha18. All rights reserved.
       </div>
     </footer>
   );

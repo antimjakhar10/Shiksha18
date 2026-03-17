@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import UniversityCard from "../components/UniversityCard";
 import contactBg from "../assets/bgImage.png";
 
@@ -30,6 +30,27 @@ const UniversityList = () => {
   const perPage = 6;
 
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+
+const courseParam = searchParams.get("course");
+const streamParam = searchParams.get("stream");
+const locationParam = searchParams.get("location");
+
+if(courseParam){
+setSelectedCourse(courseParam);
+}
+
+if(streamParam){
+setSelectedStream(streamParam);
+}
+
+if(locationParam){
+setSelectedState(locationParam);
+}
+
+}, [searchParams]);
 
   useEffect(() => {
     fetch("https://collegechale.onrender.com/api/courses")
@@ -155,7 +176,7 @@ const UniversityList = () => {
       {/* HERO */}
 
       <div
-        className="h-[260px] bg-cover bg-center flex flex-col items-center justify-center  relative px-4"
+        className="h-[260px] bg-cover bg-center flex flex-col items-center justify-center  relative px-4 mt-[4px]"
         style={{ backgroundImage: `url(${contactBg})` }}
       >
         <div className="absolute inset-0 bg-black/20"></div>

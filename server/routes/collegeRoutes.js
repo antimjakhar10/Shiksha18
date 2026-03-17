@@ -187,4 +187,127 @@ top
 
 });
 
+router.get("/courses/:stream", async (req, res) => {
+
+try{
+
+const stream = req.params.stream;
+
+const colleges = await College.find({
+streams: stream
+});
+
+let courses = new Set();
+
+colleges.forEach(college => {
+
+(college.courses || []).forEach(course => {
+
+const c = course.toLowerCase();
+
+/* ENGINEERING */
+if(stream === "Engineering" && (
+c.includes("tech") ||
+c.includes("engineer") ||
+c.includes("b.e") ||
+c.includes("m.e")
+)){
+courses.add(course);
+}
+
+/* MANAGEMENT */
+else if(stream === "Management" && (
+c.includes("mba") ||
+c.includes("bba") ||
+c.includes("pgdm") ||
+c.includes("management")
+)){
+courses.add(course);
+}
+
+/* COMPUTER APPLICATION */
+else if(stream === "Computer Application" && (
+c.includes("bca") ||
+c.includes("mca") ||
+c.includes("computer")
+)){
+courses.add(course);
+}
+
+/* NURSING */
+else if(stream === "Nursing" && (
+c.includes("nursing") ||
+c.includes("gnm") ||
+c.includes("anm")
+)){
+courses.add(course);
+}
+
+/* DESIGN */
+else if(stream === "Design" && (
+c.includes("design") ||
+c.includes("b.des")
+)){
+courses.add(course);
+}
+
+/* LAW */
+else if(stream === "Law" && (
+c.includes("llb") ||
+c.includes("law")
+)){
+courses.add(course);
+}
+
+/* PHARMACY */
+else if(stream === "Pharmacy" && (
+c.includes("pharm")
+)){
+courses.add(course);
+}
+
+/* AGRICULTURE */
+else if(stream === "Agriculture" && (
+c.includes("agri")
+)){
+courses.add(course);
+}
+
+});
+
+});
+
+res.json([...courses]);
+
+}catch(err){
+res.status(500).json(err);
+}
+
+});
+
+router.get("/locations/:stream", async (req, res) => {
+
+const colleges = await College.find({
+streams: req.params.stream
+});
+
+const states = new Set();
+
+colleges.forEach(c => {
+
+const parts = c.location?.split(",");
+
+const state =
+parts.length > 1
+? parts[1].trim()
+: parts[0];
+
+states.add(state);
+
+});
+
+res.json(Array.from(states));
+
+});
+
 module.exports = router;

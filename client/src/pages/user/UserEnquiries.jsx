@@ -46,34 +46,49 @@ My Enquiries
 <p>No enquiries found</p>
 ) : (
 
-<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div className="bg-white rounded-xl shadow overflow-x-auto">
+
+<table className="w-full text-left">
+
+<thead className="bg-gray-100">
+<tr>
+<th className="p-3">College</th>
+<th className="p-3">Course</th>
+<th className="p-3">Date</th>
+<th className="p-3">Status</th>
+</tr>
+</thead>
+
+<tbody>
 
 {enquiries.map(e => (
 
-<div
-key={e._id}
-className="bg-white shadow rounded-xl p-5 border hover:shadow-lg transition"
->
+<tr key={e._id} className="border-t hover:bg-gray-50">
 
-<h3 className="text-lg font-semibold text-gray-800">
+<td className="p-3 font-medium">
 {e.college}
-</h3>
+</td>
 
-<p className="text-gray-600 mt-1">
-Course : {e.course}
-</p>
+<td className="p-3">
+{e.course}
+</td>
 
-<p className="text-sm text-gray-400 mt-2">
+<td className="p-3 text-sm text-gray-400">
 {new Date(e.createdAt).toLocaleDateString()}
-</p>
+</td>
 
-<span className="inline-block mt-3 text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full">
-Application Submitted
+<td className="p-3">
+<span className="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">
+Submitted
 </span>
+</td>
 
-</div>
+</tr>
 
 ))}
+
+</tbody>
+</table>
 
 </div>
 

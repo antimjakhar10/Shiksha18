@@ -37,7 +37,7 @@ return(
 {/* HERO SECTION */}
 
 <div
-className="h-[260px] bg-cover bg-center flex items-center justify-center mt-[80px] relative"
+className="h-[260px] bg-cover bg-center flex items-center justify-center mt-[124px] relative"
 style={{ backgroundImage: `url(${contactBg})` }}
 >
 

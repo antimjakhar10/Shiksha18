@@ -4,6 +4,10 @@ const courseSchema = new mongoose.Schema({
 name:{
 type:String,
 required:true
+},
+stream:{
+type:String,
+required:true
 }
 });
 

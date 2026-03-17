@@ -46,7 +46,7 @@ console.log(err);
 
       {/* HERO SECTION */}
 <div
-  className="h-[260px] bg-cover bg-center flex items-center justify-center mt-[80px] relative"
+  className="h-[260px] bg-cover bg-center flex items-center justify-center mt-[124px] relative"
   style={{ backgroundImage: `url(${contactBg})` }}
 >
 
@@ -73,17 +73,17 @@ console.log(err);
         <div className="bg-gray-100 rounded-lg grid md:grid-cols-3 gap-6 p-6 text-center">
 
           <div>
-            <h4 className="font-semibold text-blue-900">Address</h4>
+            <h3 className="font-semibold text-blue-900 ">Address</h3>
             <p className="text-gray-600">Office N0. 531, Mandi, Himachal Pradesh</p>
           </div>
 
           <div>
-            <h4 className="font-semibold text-blue-900">Phone</h4>
+            <h3 className="font-semibold text-blue-900">Phone</h3>
             <p className="text-gray-600">+91 9857002222</p>
           </div>
 
           <div>
-            <h4 className="font-semibold text-blue-900">Email</h4>
+            <h3 className="font-semibold text-blue-900">Email</h3>
             <p className="text-gray-600">info@collegechale.com</p>
           </div>
 
