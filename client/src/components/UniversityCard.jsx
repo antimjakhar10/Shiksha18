@@ -22,17 +22,17 @@ return (
 
 <div
 onClick={() => navigate(url)}
-className="bg-white border border-blue-200 rounded-xl p-6 flex flex-col md:flex-row md:items-center md:justify-between shadow hover:shadow-lg transition cursor-pointer gap-4"
+className="bg-white border border-blue-200 rounded-xl p-6 flex flex-col md:flex-row md:items-center md:justify-between shadow hover:shadow-lg transition cursor-pointer gap-4 text-center md:text-left"
 >
 
 {/* LEFT SIDE */}
 
-<div className="flex flex-col sm:flex-row gap-4 items-start">
+<div className="flex flex-col sm:flex-row gap-4 items-center md:items-start justify-center md:justify-start">
 
 <img
 src={imageUrl}
 alt={uni.name}
-className="w-20 h-20 object-contain bg-gray-50 rounded"
+className="w-20 h-20 object-contain bg-gray-50 rounded mx-auto md:mx-0"
 />
 
 <div>
@@ -47,7 +47,7 @@ className="w-20 h-20 object-contain bg-gray-50 rounded"
 
 {/* BUTTONS */}
 
-<div className="flex flex-wrap gap-3 mt-4">
+<div className="flex flex-wrap gap-3 mt-4 justify-center md:justify-start">
 
 <button className="bg-blue-700 text-white px-5 py-2 rounded-md">
 Apply Now
@@ -123,12 +123,6 @@ className="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600 transitio
 </div>
 
 </div>
-
-{/* RIGHT TAG */}
-
-<span className="bg-gray-200 px-4 py-2 rounded-lg text-sm self-start md:self-auto">
-{uni.streams?.[0]}
-</span>
 
 </div>
 

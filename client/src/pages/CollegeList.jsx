@@ -17,6 +17,7 @@ const CollegeList = () => {
   const [cities, setCities] = useState([]);
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
 
   const [page, setPage] = useState(1);
   const perPage = 6;
@@ -25,24 +26,22 @@ const CollegeList = () => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
+    const courseParam = searchParams.get("course");
+    const streamParam = searchParams.get("stream");
+    const locationParam = searchParams.get("location");
 
-const courseParam = searchParams.get("course");
-const streamParam = searchParams.get("stream");
-const locationParam = searchParams.get("location");
+    if (courseParam) {
+      setSelectedCourse(courseParam);
+    }
 
-if(courseParam){
-setSelectedCourse(courseParam);
-}
+    if (streamParam) {
+      setSelectedStream(streamParam);
+    }
 
-if(streamParam){
-setSelectedStream(streamParam);
-}
-
-if(locationParam){
-setSelectedState(locationParam);
-}
-
-}, [searchParams]);
+    if (locationParam) {
+      setSelectedState(locationParam);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     fetch("https://shiksha18.onrender.com/api/courses")
@@ -89,11 +88,11 @@ setSelectedState(locationParam);
       ...new Set(
         colleges
           .filter((u) => u.location?.includes(selectedState))
-         .map((u) => {
-  const parts = u.location?.split(",");
-  return parts.length > 1 ? parts[0].trim() : null;
-})
-.filter(Boolean)
+          .map((u) => {
+            const parts = u.location?.split(",");
+            return parts.length > 1 ? parts[0].trim() : null;
+          })
+          .filter(Boolean),
       ),
     ];
 
@@ -112,18 +111,16 @@ setSelectedState(locationParam);
     if (selectedCourse) {
       result = result.filter((u) =>
         u.courses?.some((c) =>
-         String(c).toLowerCase().includes(selectedCourse.toLowerCase()),
+          String(c).toLowerCase().includes(selectedCourse.toLowerCase()),
         ),
       );
     }
 
     /* STREAM FILTER */
 
-if (selectedStream) {
-  result = result.filter((u) =>
-    u.streams?.includes(selectedStream)
-  );
-}
+    if (selectedStream) {
+      result = result.filter((u) => u.streams?.includes(selectedStream));
+    }
 
     if (selectedState) {
       result = result.filter((u) => u.location?.includes(selectedState));
@@ -181,10 +178,30 @@ if (selectedStream) {
         </div>
       </div>
 
+      {/* MOBILE FILTER BAR */}
+      <div className="flex justify-between items-center px-4 mt-4 md:hidden">
+        <button
+          onClick={() => setShowFilters(true)}
+          className="bg-gray-200 px-4 py-2 rounded-md font-medium"
+        >
+          Filters ⚙️
+        </button>
+
+        <select
+          value={sort}
+          onChange={(e) => setSort(e.target.value)}
+          className="border px-3 py-2 rounded-md"
+        >
+          <option value="">Sort</option>
+          <option value="name">Name</option>
+          <option value="location">Location</option>
+        </select>
+      </div>
+
       {/* MAIN SECTION */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 py-10 px-4">
         {/* LEFT FILTER */}
-        <div className="md:col-span-1 space-y-6 md:sticky md:top-28">
+        <div className="hidden md:block md:col-span-1 space-y-6 md:sticky md:top-28">
           {/* COURSES */}
           <div className="bg-white p-4 rounded shadow">
             <h3 className="font-bold mb-3">COURSES</h3>
@@ -270,7 +287,7 @@ if (selectedStream) {
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value)}
-              className="border px-3 py-2 rounded"
+              className="hidden md:block border px-3 py-2 rounded w-full md:w-auto"
             >
               <option value="">Sort by</option>
               <option value="name">Name</option>
@@ -284,23 +301,118 @@ if (selectedStream) {
 
           {/* PAGINATION */}
 
-<div className="flex gap-3 justify-center pt-10 flex-wrap">
-  {[...Array(totalPages)].map((_, i) => (
-    <button
-      key={i}
-      onClick={() => setPage(i + 1)}
-      className={`px-4 py-2 border rounded ${
-        page === i + 1
-          ? "bg-blue-600 text-white"
-          : "bg-white hover:bg-gray-100"
-      }`}
-    >
-      {i + 1}
-    </button>
-  ))}
-</div>
+          <div className="flex gap-3 justify-center pt-10 flex-wrap">
+            {[...Array(totalPages)].map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setPage(i + 1)}
+                className={`px-4 py-2 border rounded ${
+                  page === i + 1
+                    ? "bg-blue-600 text-white"
+                    : "bg-white hover:bg-gray-100"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
+
+      {/* MOBILE FILTER PANEL */}
+      {showFilters && (
+        <div className="fixed inset-0 z-50">
+          {/* BACKDROP */}
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setShowFilters(false)}
+          ></div>
+
+          {/* PANEL */}
+          <div className="absolute left-0 top-0 h-full w-[80%] max-w-[320px] bg-white p-5 overflow-y-auto">
+            {/* HEADER */}
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-semibold">Filters</h2>
+              <button onClick={() => setShowFilters(false)}>✕</button>
+            </div>
+
+            {/* 👉 YAHAN TERA SAME FILTER CODE COPY KAR */}
+
+            {/* COURSES */}
+            <div className="bg-white p-4 rounded shadow">
+              <h3 className="font-bold mb-3">COURSES</h3>
+
+              <div className="max-h-[200px] overflow-y-auto space-y-2">
+                {courses.map((course) => (
+                  <label key={course._id} className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="course"
+                      value={course.name}
+                      onChange={() => setSelectedCourse(course.name)}
+                    />
+                    <span>{course.name}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* STREAM */}
+            <div className="bg-white p-4 rounded shadow mt-6">
+              <h3 className="font-bold mb-3">STREAM</h3>
+
+              <div className="max-h-[200px] overflow-y-auto space-y-2">
+                {streams.map((stream) => (
+                  <label key={stream._id} className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="stream"
+                      onChange={() => setSelectedStream(stream.name)}
+                    />
+                    <span>{stream.name}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* STATE */}
+            <div className="bg-white p-4 rounded shadow mt-6">
+              <h3 className="font-bold mb-3">STATE</h3>
+
+              <div className="max-h-[200px] overflow-y-auto space-y-2">
+                {states.map((state, index) => (
+                  <label key={index} className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="state"
+                      onChange={() => setSelectedState(state)}
+                    />
+                    <span>{state}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* CITY */}
+            <div className="bg-white p-4 rounded shadow mt-6">
+              <h3 className="font-bold mb-3">CITY</h3>
+
+              <div className="max-h-[200px] overflow-y-auto space-y-2">
+                {cities.map((city, index) => (
+                  <label key={index} className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="city"
+                      onChange={() => setSelectedCity(city)}
+                    />
+                    <span>{city}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

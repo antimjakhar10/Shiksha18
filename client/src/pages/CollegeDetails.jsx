@@ -7,6 +7,9 @@ const CollegeDetails = () => {
 
   const [college, setCollege] = useState(null);
   const [activeImage, setActiveImage] = useState(null);
+  const [showFullDesc, setShowFullDesc] = useState(false);
+  const [showAllFacilities, setShowAllFacilities] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -48,10 +51,35 @@ const CollegeDetails = () => {
           const slug = item.name.toLowerCase().replace(/\s+/g, "-");
           return slug === id;
         });
+
         setCollege(foundCollege);
+        setCurrentIndex(0);
+
+        // ✅ IMPORTANT FIX
         setActiveImage(foundCollege?.images?.[0] || foundCollege?.image);
       });
   }, [id]);
+
+  const getImageUrl = (img) => {
+    if (!img) return "";
+    return img.startsWith("/uploads")
+      ? `https://shiksha18.onrender.com${img}`
+      : `https://shiksha18.onrender.com/uploads/${img}`;
+  };
+
+  const nextImage = () => {
+    if (!college?.images?.length) return;
+    setCurrentIndex((prev) =>
+      prev === college.images.length - 1 ? 0 : prev + 1,
+    );
+  };
+
+  const prevImage = () => {
+    if (!college?.images?.length) return;
+    setCurrentIndex((prev) =>
+      prev === 0 ? college.images.length - 1 : prev - 1,
+    );
+  };
 
   if (!college) {
     return <div className="p-10 text-center">Loading...</div>;
@@ -61,7 +89,7 @@ const CollegeDetails = () => {
     <div className="bg-gray-50 w-full">
       {/* HERO SECTION */}
       <div
-        className="relative h-[300px] md:h-[420px] bg-cover bg-center flex items-center justify-center"
+        className="relative h-[300px] md:h-[420px] pt-[60px] md:pt-0 bg-cover bg-center flex items-center justify-center"
         style={{
           backgroundImage: `url(${
             college.images?.[0]?.startsWith("/uploads")
@@ -72,11 +100,13 @@ const CollegeDetails = () => {
       >
         <div className="absolute inset-0 bg-black/70"></div>
 
-        <div className="relative z-10 text-center text-white px-4">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">
+        <div className="relative z-10 text-white px-4 flex flex-col items-center justify-center text-center">
+          <h1 className="text-xl sm:text-2xl md:text-5xl font-bold mb-4 leading-tight">
             {college.name}
           </h1>
-          <p className="text-sm md:text-lg opacity-90">📍 {college.location}</p>
+          <p className="text-sm md:text-lg opacity-90 flex items-center justify-center gap-1">
+            📍 {college.location}
+          </p>
         </div>
       </div>
 
@@ -118,7 +148,8 @@ const CollegeDetails = () => {
         {/* LEFT SIDE */}
         <div className="lg:col-span-2 w-full space-y-10">
           {/* MAIN IMAGE */}
-          <div className="bg-white rounded-2xl shadow-sm p-6">
+          {/* DESKTOP IMAGE */}
+          <div className="hidden md:block bg-white rounded-2xl shadow-sm p-6">
             <img
               src={
                 activeImage.startsWith("/uploads")
@@ -126,8 +157,31 @@ const CollegeDetails = () => {
                   : `https://shiksha18.onrender.com/uploads/${activeImage}`
               }
               alt="college"
-              className="w-full h-[220px] sm:h-[300px] md:h-[380px] object-cover rounded-lg"
+              className="w-full h-[300px] md:h-[380px] object-cover rounded-lg"
             />
+          </div>
+
+          {/* MOBILE SLIDER */}
+          <div className="block md:hidden bg-white rounded-2xl shadow-sm p-6 relative">
+            <img
+              src={getImageUrl(college.images?.[currentIndex] || college.image)}
+              alt="college"
+              className="w-full h-[200px] object-cover rounded-lg"
+            />
+
+            <button
+              onClick={prevImage}
+              className="absolute top-1/2 left-3 -translate-y-1/2 bg-black/50 text-white px-3 py-1 rounded-full"
+            >
+              ‹
+            </button>
+
+            <button
+              onClick={nextImage}
+              className="absolute top-1/2 right-3 -translate-y-1/2 bg-black/50 text-white px-3 py-1 rounded-full"
+            >
+              ›
+            </button>
           </div>
 
           {/* THUMBNAILS */}
@@ -148,42 +202,57 @@ ${activeImage === img ? "border-blue-600 scale-105" : "border-gray-300"}`}
           </div>
 
           {/* ABOUT */}
-          <div className="bg-white rounded-2xl shadow-sm p-8">
-            <h2 className="text-2xl font-bold mb-4">About {college.name}</h2>
+          <div className="bg-white rounded-2xl shadow-sm p-6 md:p-8">
+            <h2 className="text-xl md:text-2xl font-bold mb-4">
+              About {college.name}
+            </h2>
 
-            <p className="text-gray-600 leading-7">{college.description}</p>
+            <p
+              className={`text-gray-600 leading-7 text-justify ${
+                !showFullDesc ? "line-clamp-4" : ""
+              }`}
+            >
+              {college.description}
+            </p>
+
+            {college.description?.length > 150 && (
+              <button
+                onClick={() => setShowFullDesc(!showFullDesc)}
+                className="text-blue-600 text-sm mt-2"
+              >
+                {showFullDesc ? "Read Less" : "Read More"}
+              </button>
+            )}
           </div>
           {/* STREAMS */}
-          <div className="bg-white rounded-2xl shadow-sm p-8">
-            <h2 className="text-2xl font-bold mb-6">Streams Offered</h2>
+          <div className="bg-white rounded-2xl shadow-sm p-6 md:p-8">
+            <h2 className="text-xl md:text-2xl font-bold mb-6">
+              Streams Offered
+            </h2>
 
-            <div className="flex flex-wrap gap-3">
-              {college?.streams?.length > 0 ? (
-                college.streams.map((stream, i) => (
-                  <span
-                    key={i}
-                    className="px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-medium"
-                  >
-                    {stream}
-                  </span>
-                ))
-              ) : (
-                <p className="text-gray-500">
-                  Stream information not available
-                </p>
-              )}
+            <div className="grid grid-cols-2 md:flex md:flex-wrap gap-3">
+              {college?.streams?.map((stream, i) => (
+                <span
+                  key={i}
+                  className="bg-purple-100 text-purple-700 px-3 py-2 rounded-full text-sm text-center md:text-left md:px-4 md:py-2"
+                >
+                  {stream}
+                </span>
+              ))}
             </div>
           </div>
 
           {/* COURSES */}
-          <div className="bg-white rounded-2xl shadow-sm p-8">
-            <h2 className="text-2xl font-bold mb-6">Popular Courses</h2>
+          <div className="bg-white rounded-2xl shadow-sm p-6 md:p-8">
+            <h2 className="text-xl md:text-2xl font-bold mb-6">
+              Popular Courses
+            </h2>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="grid grid-cols-2 md:flex md:flex-wrap gap-3">
               {college.courses.map((course, i) => (
                 <span
                   key={i}
-                  className="px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-medium"
+                  className="bg-blue-50 text-blue-700 px-3 py-2 rounded-full text-sm text-center md:text-left md:px-4 md:py-2"
                 >
                   {course}
                 </span>
@@ -192,44 +261,73 @@ ${activeImage === img ? "border-blue-600 scale-105" : "border-gray-300"}`}
           </div>
 
           {/* FACILITIES */}
-          <div className="bg-white rounded-2xl shadow-sm p-8">
-            <h2 className="text-2xl font-bold mb-6">Facilities</h2>
+          <div className="bg-white rounded-2xl shadow-sm p-6 md:p-8">
+            <h2 className="text-xl md:text-2xl font-bold mb-6">Facilities</h2>
 
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-600">
-              {college.facilities.map((item, i) => (
+              {(showAllFacilities
+                ? college.facilities
+                : college.facilities.slice(0, 5)
+              ).map((item, i) => (
                 <li key={i} className="flex items-center gap-2">
                   <span className="text-green-600">✔</span>
                   {item}
                 </li>
               ))}
             </ul>
+
+            {college.facilities.length > 5 && (
+              <button
+                onClick={() => setShowAllFacilities(!showAllFacilities)}
+                className="text-blue-600 text-sm mt-3"
+              >
+                {showAllFacilities ? "View Less" : "View All"}
+              </button>
+            )}
           </div>
 
           {/* PLACEMENTS */}
-          <div className="bg-white rounded-2xl shadow-sm p-8">
-            <h2 className="text-2xl font-bold mb-6">Top Recruiters</h2>
+          <div className="bg-white rounded-2xl shadow-sm p-6 md:p-8 overflow-hidden">
+  <h2 className="text-xl md:text-2xl font-bold mb-6 text-center">
+    Our Placement Partners
+  </h2>
 
-            <div className="flex flex-wrap gap-3">
-              {college?.placements?.length > 0 ? (
-                college.placements.map((company, index) => (
-                  <div
-                    key={index}
-                    className="bg-white border rounded-lg px-4 py-2 flex items-center shadow-sm"
-                  >
-                    <img
-                      src={`https://shiksha18.onrender.com${company.logo}`}
-                      alt={company.name}
-                      className="h-8 object-contain"
-                    />
-                  </div>
-                ))
-              ) : (
-                <p className="text-gray-500">
-                  Placement information not available
-                </p>
-              )}
-            </div>
-          </div>
+  <div className="space-y-6">
+
+    {/* ROW 1 */}
+    <div className="flex gap-6 whitespace-nowrap animate-scroll">
+      {[...college.placements, ...college.placements].map((company, index) => (
+        <div
+          key={index}
+          className="min-w-[120px] h-[70px] bg-white border rounded-lg flex items-center justify-center shadow"
+        >
+          <img
+            src={`https://shiksha18.onrender.com${company.logo}`}
+            alt={company.name}
+            className="h-8 object-contain"
+          />
+        </div>
+      ))}
+    </div>
+
+    {/* ROW 2 */}
+    <div className="flex gap-6 whitespace-nowrap animate-scroll-reverse">
+      {[...college.placements, ...college.placements].map((company, index) => (
+        <div
+          key={index}
+          className="min-w-[120px] h-[70px] bg-white border rounded-lg flex items-center justify-center shadow"
+        >
+          <img
+            src={`https://shiksha18.onrender.com${company.logo}`}
+            alt={company.name}
+            className="h-8 object-contain"
+          />
+        </div>
+      ))}
+    </div>
+
+  </div>
+</div>
 
           {/* FEES STRUCTURE */}
           <div className="bg-white rounded-2xl shadow-sm p-8">
@@ -411,8 +509,30 @@ ${activeImage === img ? "border-blue-600 scale-105" : "border-gray-300"}`}
           </div>
         </div>
       </section>
+
+
+       <style>
+{`
+@keyframes scroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-scroll {
+  animation: scroll 35s linear infinite;
+}
+
+.animate-scroll-reverse {
+  animation: scroll 35s linear infinite reverse;
+}
+`}
+</style>
     </div>
+
+    
+    
   );
+  
 };
 
 export default CollegeDetails;

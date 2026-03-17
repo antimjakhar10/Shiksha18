@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../assets/Shiksha18-logo.jpg";
+import logo from "../assets/shiksha-Logo.png";
 
 const API =
   window.location.hostname === "localhost"
@@ -22,6 +22,7 @@ const Navbar = () => {
   const [courseTypes, setCourseTypes] = useState({});
   const [mobileLocationsOpen, setMobileLocationsOpen] = useState(false);
   const [mobileStream, setMobileStream] = useState("");
+  const [mobileStep, setMobileStep] = useState("main");
 
   const location = useLocation();
 
@@ -105,7 +106,7 @@ const Navbar = () => {
     <>
       {/* TOP BAR */}
       <div
-        className={`fixed top-0 left-0 w-full z-50 bg-slate-600 text-white text-sm py-2 px-5 lg:px-12 flex justify-between items-center transition-transform duration-300 ${
+        className={`fixed top-0 left-0 w-full z-30 bg-slate-600 text-white text-sm py-2 px-5 lg:px-12 flex justify-between items-center transition-transform duration-300 ${
           scrolled ? "-translate-y-full" : "translate-y-0"
         }`}
       >
@@ -124,7 +125,7 @@ const Navbar = () => {
 
       {/* MAIN NAVBAR */}
       <div
-        className={`fixed left-0 w-full z-40 transition-all duration-300 ${
+        className={`fixed left-0 w-full z-50 transition-all duration-300 ${
           scrolled
             ? "top-0 bg-black py-4"
             : isHomePage
@@ -136,14 +137,6 @@ const Navbar = () => {
           {/* LOGO */}
           <Link to="/" className="flex items-center gap-2">
             <img src={logo} alt="logo" className="h-10 md:h-12" />
-
-            <span
-              className={`text-lg md:text-xl font-bold ${
-                scrolled || isHomePage ? "text-white" : "text-black"
-              }`}
-            >
-              Shiksha18
-            </span>
           </Link>
 
           {/* DESKTOP MENU */}
@@ -316,120 +309,187 @@ const Navbar = () => {
 
           {/* MOBILE HAMBURGER */}
           <div
-            className={`lg:hidden text-2xl cursor-pointer block ml-auto ${
+            className={`lg:hidden text-2xl cursor-pointer ml-auto ${
               !isHomePage || scrolled ? "text-black" : "text-white"
             }`}
-            onClick={() => setMenuOpen(!menuOpen)}
+            onClick={() => setMenuOpen(true)}
           >
             ☰
           </div>
         </div>
 
         {/* MOBILE MENU */}
-        {menuOpen && (
-          <div className="lg:hidden fixed top-[80px] left-0 w-full h-[calc(100vh-80px)] bg-white shadow-lg px-6 py-4 flex flex-col gap-4 text-black font-semibold overflow-y-auto z-50">
-            <Link to="/universities" onClick={() => setMenuOpen(false)}>
-              University
-            </Link>
+        <div
+          className={`lg:hidden fixed inset-0 z-50 ${
+            menuOpen ? "block" : "hidden"
+          }`}
+        >
+          {/* OVERLAY */}
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => {
+              setMenuOpen(false);
+              setMobileStep("main");
+            }}
+          ></div>
 
-            <Link to="/colleges" onClick={() => setMenuOpen(false)}>
-              College
-            </Link>
-
-            <Link to="/blogs" onClick={() => setMenuOpen(false)}>
-              Blogs
-            </Link>
-
-            <Link to="/contact" onClick={() => setMenuOpen(false)}>
-              Contact Us
-            </Link>
-
-            <div className="border-t pt-4">
-              <button
-                onClick={() => setMobileLocationsOpen(!mobileLocationsOpen)}
-                className="w-full flex justify-between items-center font-semibold text-lg"
-              >
-                Locations
-                <span>{mobileLocationsOpen ? "−" : "+"}</span>
-              </button>
-
-              {mobileLocationsOpen && (
-                <div className="mt-4 space-y-4">
-                  {/* STREAM LIST */}
-
-                  <div className="space-y-2">
-                    <p className="font-semibold text-gray-500 text-sm">
-                      Streams
-                    </p>
-
-                    {streams.map((s) => (
-                      <div
-                        key={s._id}
-                        onClick={() => {
-                          setMobileStream(s.name);
-                          loadStream(s.name);
-                        }}
-                        className={`p-2 rounded cursor-pointer ${
-                          mobileStream === s.name
-                            ? "bg-green-100 text-green-700 font-semibold"
-                            : "hover:bg-gray-100"
-                        }`}
-                      >
-                        {s.name}
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* COURSES */}
-
-                  {mobileStream && (
-                    <div>
-                      <p className="font-semibold text-gray-500 text-sm mb-2">
-                        Courses
-                      </p>
-
-                      <div className="space-y-1">
-                        {courses.slice(0, 5).map((course) => (
-                          <Link
-                            key={course}
-                            to={`/universities?course=${course}&stream=${mobileStream}`}
-                            onClick={() => setMenuOpen(false)}
-                            className="block text-gray-700 text-sm hover:text-blue-600"
-                          >
-                            {course}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* LOCATIONS */}
-
-                  {mobileStream && (
-                    <div>
-                      <p className="font-semibold text-gray-500 text-sm mb-2">
-                        Locations
-                      </p>
-
-                      <div className="space-y-1">
-                        {locations.slice(0, 5).map((loc) => (
-                          <Link
-                            key={loc}
-                            to={`/universities?location=${loc}&stream=${mobileStream}`}
-                            onClick={() => setMenuOpen(false)}
-                            className="block text-gray-700 text-sm hover:text-blue-600"
-                          >
-                            {loc}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
+          {/* PANEL */}
+          <div className="absolute top-0 left-0 w-full h-full bg-white p-5 overflow-y-auto transition-all duration-300">
+            {/* HEADER */}
+            <div className="flex items-center justify-between mb-5">
+              {mobileStep !== "main" && (
+                <button
+                  onClick={() => {
+                    if (mobileStep === "details") setMobileStep("streams");
+                    else setMobileStep("main");
+                  }}
+                  className="text-lg font-semibold"
+                >
+                  ← Back
+                </button>
               )}
+
+              <img src={logo} className="h-10" />
+
+              <button
+                onClick={() => {
+                  setMenuOpen(false);
+                  setMobileStep("main");
+                }}
+                className="text-2xl"
+              >
+                ✕
+              </button>
             </div>
+
+            {/* STEP 1: MAIN */}
+            {mobileStep === "main" && (
+              <div className="flex flex-col gap-4 text-lg font-semibold">
+                <Link to="/universities" onClick={() => setMenuOpen(false)}>
+                  University
+                </Link>
+
+                <Link to="/colleges" onClick={() => setMenuOpen(false)}>
+                  College
+                </Link>
+
+                <Link to="/blogs" onClick={() => setMenuOpen(false)}>
+                  Blogs
+                </Link>
+
+                <Link to="/contact" onClick={() => setMenuOpen(false)}>
+                  Contact Us
+                </Link>
+
+                <button
+                  onClick={() => setMobileStep("streams")}
+                  className="text-left w-full flex justify-between items-center"
+                >
+                  <span>Locations</span>
+                  <span>→</span>
+                </button>
+              </div>
+            )}
+
+            {/* STEP 2: STREAMS */}
+            {mobileStep === "streams" && (
+              <div className="space-y-3">
+                <h3 className="font-semibold text-lg">Select Stream</h3>
+
+                {streams.map((s) => (
+                  <div
+                    key={s._id}
+                    onClick={() => {
+                      setMobileStream(s.name);
+                      loadStream(s.name);
+                      setMobileStep("details");
+                    }}
+                    className="p-3 border rounded hover:bg-gray-100 cursor-pointer"
+                  >
+                    {s.name}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* STEP 3: DETAILS */}
+            {mobileStep === "details" && (
+              <div className="space-y-6">
+                {/* COURSES */}
+                <div>
+                  <h3 className="font-semibold mb-2">Colleges By Degree</h3>
+
+                  {courses.slice(0, 5).map((course) => (
+                    <Link
+                      key={course}
+                      to={`/universities?course=${course}&stream=${mobileStream}`}
+                      onClick={() => setMenuOpen(false)}
+                      className="block text-sm text-gray-700 py-1"
+                    >
+                      {course}
+                    </Link>
+                  ))}
+                </div>
+
+                {/* LOCATIONS */}
+                <div>
+                  <h3 className="font-semibold mb-2">Colleges By Location</h3>
+
+                  {locations.slice(0, 5).map((loc) => (
+                    <Link
+                      key={loc}
+                      to={`/universities?location=${loc}&stream=${mobileStream}`}
+                      onClick={() => setMenuOpen(false)}
+                      className="block text-sm text-gray-700 py-1"
+                    >
+                      {mobileStream} Colleges in {loc}
+                    </Link>
+                  ))}
+                </div>
+
+                {/* POPULAR */}
+                <div>
+                  <h3 className="font-semibold mb-2">Popular Colleges</h3>
+
+                  {popularColleges.map((c) => (
+                    <Link
+                      key={c._id}
+                      to={
+                        c.type === "University"
+                          ? `/universities/${c.name.toLowerCase().replace(/\s+/g, "-")}`
+                          : `/colleges/${c.name.toLowerCase().replace(/\s+/g, "-")}`
+                      }
+                      onClick={() => setMenuOpen(false)}
+                      className="block text-sm text-gray-700 py-1"
+                    >
+                      {c.name}
+                    </Link>
+                  ))}
+                </div>
+
+                {/* TOP */}
+                <div>
+                  <h3 className="font-semibold mb-2">Top Colleges</h3>
+
+                  {topColleges.map((c) => (
+                    <Link
+                      key={c._id}
+                      to={
+                        c.type === "University"
+                          ? `/universities/${c.name.toLowerCase().replace(/\s+/g, "-")}`
+                          : `/colleges/${c.name.toLowerCase().replace(/\s+/g, "-")}`
+                      }
+                      onClick={() => setMenuOpen(false)}
+                      className="block text-sm text-gray-700 py-1"
+                    >
+                      {c.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </>
   );
