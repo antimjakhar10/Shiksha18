@@ -29,7 +29,10 @@ const allowedOrigins = [
   "http://localhost:3000",
   "https://collegechale.com",
   "https://www.collegechale.com",
-  "https://shiksha18.onrender.com"
+  "http://shiksha18.com",
+  "https://shiksha18.com",
+  "http://www.shiksha18.com",
+  "https://www.shiksha18.com" 
 ];
 
 app.use(
