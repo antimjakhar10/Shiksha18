@@ -48,7 +48,7 @@ My Enquiries
 
 <div className="bg-white rounded-xl shadow overflow-x-auto">
 
-<table className="w-full text-left">
+<table className="min-w-[600px] w-full text-left">
 
 <thead className="bg-gray-100">
 <tr>

@@ -13,27 +13,26 @@ function SavedColleges() {
 
   // ✅ REMOVE FUNCTION
   const handleRemove = async (id) => {
-  try {
-    console.log("Deleting ID:", id);
+    try {
+      console.log("Deleting ID:", id);
 
-    const res = await fetch(`${API}/saved/${id}`, {
-      method: "DELETE",
-    });
+      const res = await fetch(`${API}/saved/${id}`, {
+        method: "DELETE",
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    console.log("Response:", res.status, data);
+      console.log("Response:", res.status, data);
 
-    if (res.ok) {
-      setColleges((prev) => prev.filter((c) => c._id !== id));
-    } else {
-      alert("Delete failed");
+      if (res.ok) {
+        setColleges((prev) => prev.filter((c) => c._id !== id));
+      } else {
+        alert("Delete failed");
+      }
+    } catch (error) {
+      console.log("Error:", error);
     }
-
-  } catch (error) {
-    console.log("Error:", error);
-  }
-};
+  };
 
   // ✅ FETCH FIX (same API use kar)
   useEffect(() => {
@@ -53,9 +52,8 @@ function SavedColleges() {
       {colleges.length === 0 ? (
         <p className="text-gray-500">No saved colleges</p>
       ) : (
-        <div className="bg-white rounded-xl shadow overflow-hidden">
-          <table className="w-full text-left">
-
+        <div className="bg-white rounded-xl shadow overflow-x-auto">
+          <table className="min-w-[700px] w-full text-left">
             {/* HEADER */}
             <thead className="bg-gray-100 text-gray-700 text-sm">
               <tr>
@@ -103,7 +101,7 @@ function SavedColleges() {
                     </td>
 
                     {/* ACTIONS */}
-                    <td className="p-4 flex gap-2">
+                    <td className="p-4 flex flex-wrap gap-2">
                       <button
                         onClick={() => navigate(`/colleges/${slug}`)}
                         className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm transition"
@@ -122,7 +120,6 @@ function SavedColleges() {
                 );
               })}
             </tbody>
-
           </table>
         </div>
       )}

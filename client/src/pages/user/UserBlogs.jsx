@@ -37,7 +37,7 @@ function UserBlogs() {
       ) : (
         <div className="bg-white rounded-xl shadow overflow-x-auto">
 
-          <table className="w-full text-left">
+          <table className="min-w-[800px] w-full text-left">
 
             {/* HEADER */}
             <thead className="bg-gray-100">

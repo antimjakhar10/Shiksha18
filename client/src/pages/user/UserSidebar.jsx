@@ -14,7 +14,7 @@ navigate("/user/login");
 
 return(
 
-<div className="w-64 bg-white shadow-lg p-6 flex flex-col justify-between">
+<div className="w-64 min-h-screen bg-white border-r p-6 flex flex-col justify-between">
 
 <div>
 
