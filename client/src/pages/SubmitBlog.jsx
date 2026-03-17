@@ -20,7 +20,7 @@ const formData = new FormData();
 
 formData.append("image",file);
 
-const res = await axios.post("http://collegechale.onrender.com/upload",formData);
+const res = await axios.post("https://shiksha18.onrender.com/upload",formData);
 
 console.log(res.data);   // ⭐ check here
 
@@ -39,7 +39,7 @@ alert("Please login first");
 return;
 }
 
-await axios.post("https://collegechale.onrender.com/api/blogs/add",{
+await axios.post("https://shiksha18.onrender.com/api/blogs/add",{
 
 title,
 slug:title.toLowerCase().replace(/ /g,"-"),

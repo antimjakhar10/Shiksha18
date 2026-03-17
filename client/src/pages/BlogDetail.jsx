@@ -11,7 +11,7 @@ const [blog,setBlog] = useState(null);
 useEffect(()=>{
 
 axios
-.get("https://collegechale.onrender.com/api/blogs")
+.get("https://shiksha18.onrender.com/api/blogs")
 .then(res=>{
 
 const found = res.data.find(b => b.slug === slug);
@@ -49,7 +49,7 @@ Written by {blog.author || "Admin"} • {new Date(blog.createdAt).toDateString()
 </p>
 
 <img
-src={`http://collegechale.onrender.com${blog.image}`}
+src={`https://shiksha18.onrender.com${blog.image}`}
 alt={blog.title}
 className="w-full h-[420px] object-cover rounded-xl mb-10"
 />

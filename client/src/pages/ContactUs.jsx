@@ -24,7 +24,7 @@ e.preventDefault();
 
 try{
 
-await axios.post("https://collegechale.onrender.com/api/contact",form);
+await axios.post("https://shiksha18.onrender.com/api/contact",form);
 
 setSuccess("Message sent successfully!");
 

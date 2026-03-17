@@ -17,7 +17,7 @@ const fetchUsers = async () => {
 
 try{
 
-const res = await axios.get("https://collegechale.onrender.com/api/users");
+const res = await axios.get("https://shiksha18.onrender.com/api/users");
 
 setUsers(res.data);
 
@@ -44,7 +44,7 @@ if(!window.confirm("Are you sure you want to delete this user?")) return;
 
 try{
 
-await axios.delete(`https://collegechale.onrender.com/api/users/${id}`);
+await axios.delete(`https://shiksha18.onrender.com/api/users/${id}`);
 
 fetchUsers();
 

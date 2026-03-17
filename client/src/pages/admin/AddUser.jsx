@@ -55,7 +55,7 @@ const addUser = async(e)=>{
 
 e.preventDefault();
 
-await axios.post("https://collegechale.onrender.com/api/users/add",form);
+await axios.post("https://shiksha18.onrender.com/api/users/add",form);
 
 alert("User Added Successfully");
 

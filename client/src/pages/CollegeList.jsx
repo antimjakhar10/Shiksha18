@@ -45,17 +45,17 @@ setSelectedState(locationParam);
 }, [searchParams]);
 
   useEffect(() => {
-    fetch("https://collegechale.onrender.com/api/courses")
+    fetch("https://shiksha18.onrender.com/api/courses")
       .then((res) => res.json())
       .then((data) => setCourses(data));
 
-    fetch("https://collegechale.onrender.com/api/streams")
+    fetch("https://shiksha18.onrender.com/api/streams")
       .then((res) => res.json())
       .then((data) => setStreams(data));
   }, []);
 
   useEffect(() => {
-    fetch("https://collegechale.onrender.com/api/colleges")
+    fetch("https://shiksha18.onrender.com/api/colleges")
       .then((res) => res.json())
       .then((data) => {
         const colleges = data.filter((c) => c.type === "College");

@@ -25,7 +25,7 @@ const CollegeDetails = () => {
   const handleSubmit = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
 
-    await fetch("https://collegechale.onrender.com/api/enquiries/add", {
+    await fetch("https://shiksha18.onrender.com/api/enquiries/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +41,7 @@ const CollegeDetails = () => {
   };
 
   useEffect(() => {
-    fetch("https://collegechale.onrender.com/api/colleges")
+    fetch("https://shiksha18.onrender.com/api/colleges")
       .then((res) => res.json())
       .then((data) => {
         const foundCollege = data.find((item) => {
@@ -65,8 +65,8 @@ const CollegeDetails = () => {
         style={{
           backgroundImage: `url(${
             college.images?.[0]?.startsWith("/uploads")
-              ? `http://collegechale.onrender.com${college.images[0]}`
-              : `https://collegechale.onrender.com/uploads/${college.images[0]}`
+              ? `https://shiksha18.onrender.com${college.images[0]}`
+              : `https://shiksha18.onrender.com/uploads/${college.images[0]}`
           })`,
         }}
       >
@@ -122,8 +122,8 @@ const CollegeDetails = () => {
             <img
               src={
                 activeImage.startsWith("/uploads")
-                  ? `http://collegechale.onrender.com${activeImage}`
-                  : `https://collegechale.onrender.com/uploads/${activeImage}`
+                  ? `https://shiksha18.onrender.com${activeImage}`
+                  : `https://shiksha18.onrender.com/uploads/${activeImage}`
               }
               alt="college"
               className="w-full h-[220px] sm:h-[300px] md:h-[380px] object-cover rounded-lg"
@@ -137,8 +137,8 @@ const CollegeDetails = () => {
                 key={index}
                 src={
                   img.startsWith("/uploads")
-                    ? `http://collegechale.onrender.com${img}`
-                    : `https://collegechale.onrender.com/uploads/${img}`
+                    ? `https://shiksha18.onrender.com${img}`
+                    : `https://shiksha18.onrender.com/uploads/${img}`
                 }
                 onClick={() => setActiveImage(img)}
                 className={`w-16 md:w-24 h-16 md:h-20 object-contain border rounded-lg cursor-pointer
@@ -217,7 +217,7 @@ ${activeImage === img ? "border-blue-600 scale-105" : "border-gray-300"}`}
                     className="bg-white border rounded-lg px-4 py-2 flex items-center shadow-sm"
                   >
                     <img
-                      src={`http://collegechale.onrender.com${company.logo}`}
+                      src={`https://shiksha18.onrender.com${company.logo}`}
                       alt={company.name}
                       className="h-8 object-contain"
                     />

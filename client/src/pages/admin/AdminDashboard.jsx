@@ -13,7 +13,7 @@ fetchStats();
 const fetchStats = async ()=>{
 
 const res = await axios.get(
-"https://collegechale.onrender.com/api/colleges"
+"https://shiksha18.onrender.com/api/colleges"
 );
 
 setColleges(res.data);

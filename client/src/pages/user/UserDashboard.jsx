@@ -14,15 +14,15 @@ if(!user){
 return <div>Please login again</div>;
 }
 
-fetch(`https://collegechale.onrender.com/api/blogs/user/${user.id}`)
+fetch(`https://shiksha18.onrender.com/api/blogs/user/${user.id}`)
 .then(res=>res.json())
 .then(data=>setBlogs(data));
 
-fetch(`https://collegechale.onrender.com/api/enquiries/user/${user.id}`)
+fetch(`https://shiksha18.onrender.com/api/enquiries/user/${user.id}`)
 .then(res=>res.json())
 .then(data=>setEnquiries(data));
 
-fetch(`https://collegechale.onrender.com/api/saved/user/${user.id}`)
+fetch(`https://shiksha18.onrender.com/api/saved/user/${user.id}`)
 .then(res=>res.json())
 .then(data=>setSaved(data));
 

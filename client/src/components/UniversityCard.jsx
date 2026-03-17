@@ -7,8 +7,8 @@ const navigate = useNavigate();
 
 const imageUrl = uni.image
 ? uni.image.startsWith("/uploads")
-  ? `http://collegechale.onrender.com${uni.image}`
-  : `https://collegechale.onrender.com/uploads/${uni.image}`
+  ? `https://shiksha18.onrender.com${uni.image}`
+  : `https://shiksha18.onrender.com/uploads/${uni.image}`
 : "https://via.placeholder.com/80";
 
 const slug = uni.name.toLowerCase().replace(/\s+/g, "-");
@@ -89,7 +89,7 @@ alert("Login first");
 return;
 }
 
-await fetch("https://collegechale.onrender.com/api/saved/save",{
+await fetch("https://shiksha18.onrender.com/api/saved/save",{
 
 method:"POST",
 headers:{

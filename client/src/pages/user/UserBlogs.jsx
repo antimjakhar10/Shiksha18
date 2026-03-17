@@ -14,7 +14,7 @@ function UserBlogs() {
       return;
     }
 
-    fetch(`https://collegechale.onrender.com/api/blogs/user/${user.id}`)
+    fetch(`https://shiksha18.onrender.com/api/blogs/user/${user.id}`)
       .then((res) => res.json())
       .then((data) => {
         setBlogs(data);
@@ -55,8 +55,8 @@ function UserBlogs() {
               {blogs.map((blog) => {
 
                 const imageUrl = blog.image?.startsWith("/uploads")
-                  ? `http://collegechale.onrender.com${blog.image}`
-                  : `https://collegechale.onrender.com/uploads/${blog.image}`;
+                  ? `https://shiksha18.onrender.com${blog.image}`
+                  : `https://shiksha18.onrender.com/uploads/${blog.image}`;
 
                 return (
                   <tr key={blog._id} className="border-t hover:bg-gray-50">

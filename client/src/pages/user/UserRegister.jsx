@@ -17,7 +17,7 @@ e.preventDefault();
 try{
 
 await axios.post(
-"https://collegechale.onrender.com/api/auth/register",
+"https://shiksha18.onrender.com/api/auth/register",
 {name,email,password}
 );
 

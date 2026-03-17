@@ -15,7 +15,7 @@ function Categories() {
   // Fetch categories
   const fetchCategories = async () => {
     try {
-      const res = await axios.get("https://collegechale.onrender.com/api/categories");
+      const res = await axios.get("https://shiksha18.onrender.com/api/categories");
       setCategories(res.data);
     } catch (error) {
       console.log(error);
@@ -34,7 +34,7 @@ function Categories() {
     }
 
     try {
-      await axios.post("https://collegechale.onrender.com/api/categories/add", {
+      await axios.post("https://shiksha18.onrender.com/api/categories/add", {
         name,
         slug,
       });
@@ -51,7 +51,7 @@ function Categories() {
   // UPDATE CATEGORY
   const updateCategory = async () => {
     try {
-      await axios.put(`https://collegechale.onrender.com/api/categories/${editId}`, {
+      await axios.put(`https://shiksha18.onrender.com/api/categories/${editId}`, {
         name,
         slug,
       });
@@ -68,7 +68,7 @@ function Categories() {
 
   // DELETE CATEGORY
   const deleteCategory = async (id) => {
-    await axios.delete(`https://collegechale.onrender.com/api/categories/${id}`);
+    await axios.delete(`https://shiksha18.onrender.com/api/categories/${id}`);
     fetchCategories();
   };
 

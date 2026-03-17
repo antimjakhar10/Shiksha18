@@ -9,7 +9,7 @@ function SavedColleges() {
   const API =
     window.location.hostname === "localhost"
       ? "http://localhost:5000/api"
-      : "https://collegechale.onrender.com/api";
+      : "https://shiksha18.onrender.com/api";
 
   // ✅ REMOVE FUNCTION
   const handleRemove = async (id) => {

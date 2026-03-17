@@ -32,7 +32,7 @@ const formData = new FormData();
 
 formData.append("image",file);
 
-const res = await axios.post("http://collegechale.onrender.com/upload",formData);
+const res = await axios.post("https://shiksha18.onrender.com/upload",formData);
 
 setImage(res.data.image);
 
@@ -44,7 +44,7 @@ const addBlog = async(e)=>{
 
 e.preventDefault();
 
-await axios.post("https://collegechale.onrender.com/api/blogs/add",{
+await axios.post("https://shiksha18.onrender.com/api/blogs/add",{
 
 title,
 slug,

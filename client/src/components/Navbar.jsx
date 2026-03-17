@@ -5,7 +5,7 @@ import logo from "../assets/Shiksha18-logo.jpg";
 const API =
   window.location.hostname === "localhost"
     ? "http://localhost:5000/api"
-    : "https://collegechale.onrender.com/api";
+    : "https://shiksha18.onrender.com/api";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);

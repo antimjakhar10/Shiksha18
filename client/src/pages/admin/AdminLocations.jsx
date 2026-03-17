@@ -26,7 +26,7 @@ const fetchStreams = async()=>{
 
 try{
 
-const res = await axios.get("https://collegechale.onrender.com/api/streams");
+const res = await axios.get("https://shiksha18.onrender.com/api/streams");
 
 setStreams(res.data);
 
@@ -41,7 +41,7 @@ const fetchColleges = async()=>{
 
 try{
 
-const res = await axios.get("https://collegechale.onrender.com/api/colleges");
+const res = await axios.get("https://shiksha18.onrender.com/api/colleges");
 
 setColleges(res.data);
 setFilteredColleges(res.data);
@@ -76,7 +76,7 @@ setStream(value);
 try{
 
 const res = await axios.get(
-`https://collegechale.onrender.com/api/colleges/stream/${value}`
+`https://shiksha18.onrender.com/api/colleges/stream/${value}`
 );
 
 setFilteredColleges(res.data);
@@ -94,7 +94,7 @@ const handleSubmit = async()=>{
 
 try{
 
-await axios.post("https://collegechale.onrender.com/api/megamenu/add",{
+await axios.post("https://shiksha18.onrender.com/api/megamenu/add",{
 
 stream,
 state,

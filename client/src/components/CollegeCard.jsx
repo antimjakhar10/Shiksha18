@@ -10,8 +10,8 @@ const CollegeCard = ({ college }) => {
         <img
           src={
             college.image.startsWith("/uploads")
-              ? `http://collegechale.onrender.com${college.image}`
-              : `https://collegechale.onrender.com/uploads/${college.image}`
+              ? `https://shiksha18.onrender.com${college.image}`
+              : `https://shiksha18.onrender.com/uploads/${college.image}`
           }
           alt={college.name}
           className="h-28 object-contain mb-4 mx-auto"

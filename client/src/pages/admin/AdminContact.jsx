@@ -13,7 +13,7 @@ const fetchContacts = async()=>{
 
 try{
 
-const res = await axios.get("https://collegechale.onrender.com/api/contact");
+const res = await axios.get("https://shiksha18.onrender.com/api/contact");
 
 setContacts(res.data);
 

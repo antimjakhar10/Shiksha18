@@ -40,7 +40,7 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    fetch("https://collegechale.onrender.com/api/colleges")
+    fetch("https://shiksha18.onrender.com/api/colleges")
       .then((res) => res.json())
       .then((data) => setColleges(data));
   }, []);

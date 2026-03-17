@@ -25,7 +25,7 @@ const StreamsSection = () => {
       );
 
   useEffect(() => {
-    fetch("https://collegechale.onrender.com/api/colleges")
+    fetch("https://shiksha18.onrender.com/api/colleges")
       .then((res) => res.json())
       .then((data) => setColleges(data));
   }, []);
@@ -79,8 +79,8 @@ const StreamsSection = () => {
                 <img
                   src={
                     uni.image.startsWith("/uploads")
-                      ? `http://collegechale.onrender.com${uni.image}`
-                      : `https://collegechale.onrender.com/uploads/${uni.image}`
+                      ? `https://shiksha18.onrender.com${uni.image}`
+                      : `https://shiksha18.onrender.com/uploads/${uni.image}`
                   }
                   alt={uni.name}
                   className="h-28 object-contain mb-4 mx-auto"

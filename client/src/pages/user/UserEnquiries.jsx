@@ -16,7 +16,7 @@ return;
 
 const userId = user.id || user._id;
 
-fetch(`https://collegechale.onrender.com/api/enquiries/user/${userId}`)
+fetch(`https://shiksha18.onrender.com/api/enquiries/user/${userId}`)
 .then(res => res.json())
 .then(data=>{
 console.log("Enquiries:",data);

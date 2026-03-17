@@ -16,7 +16,7 @@ e.preventDefault();
 try{
 
 const res = await axios.post(
-"https://collegechale.onrender.com/api/auth/login",
+"https://shiksha18.onrender.com/api/auth/login",
 {email,password}
 );
 
