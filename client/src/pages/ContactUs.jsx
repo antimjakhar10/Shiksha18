@@ -84,7 +84,7 @@ console.log(err);
 
           <div>
             <h3 className="font-semibold text-blue-900">Email</h3>
-            <p className="text-gray-600">info@collegechale.com</p>
+            <p className="text-gray-600">info@shiksha18.com</p>
           </div>
 
         </div>
