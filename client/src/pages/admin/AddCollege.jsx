@@ -226,7 +226,6 @@ console.log("USER:", user);
 
 await axios.post("https://shiksha18.onrender.com/api/colleges/add", {
   ...formattedData,
-  status: isAdmin ? "approved" : "pending",
   addedBy: isAdmin ? "admin" : "user",
   userId: user?.id || user?._id
 });

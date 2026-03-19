@@ -13,18 +13,22 @@ function AdminCollegeList() {
   }, []);
 
   const fetchColleges = async () => {
-    const res = await axios.get("https://shiksha18.onrender.com/api/colleges/all")
+    const res = await axios.get(
+      "https://shiksha18.onrender.com/api/colleges/all"
+    );
     setColleges(res.data);
   };
 
   const deleteCollege = async (id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this college?",
+      "Are you sure you want to delete this college?"
     );
 
     if (!confirmDelete) return;
 
-    await axios.delete(`https://shiksha18.onrender.com/api/colleges/${id}`);
+    await axios.delete(
+      `https://shiksha18.onrender.com/api/colleges/${id}`
+    );
 
     fetchColleges();
   };
@@ -32,6 +36,7 @@ function AdminCollegeList() {
   return (
     <div className="admin-college-list">
       <h1>All Universities/Colleges</h1>
+
       <input
         className="search-input"
         placeholder="Search college..."
@@ -53,54 +58,62 @@ function AdminCollegeList() {
           <tbody>
             {colleges
               .filter((college) =>
-                college.name.toLowerCase().includes(search.toLowerCase()),
+                college.name
+                  .toLowerCase()
+                  .includes(search.toLowerCase())
               )
               .map((college) => (
                 <tr key={college._id}>
                   <td>
                     <img
                       src={
-                        college.image && college.image.startsWith("/uploads")
+                        college.image &&
+                        college.image.startsWith("/uploads")
                           ? `https://shiksha18.onrender.com${college.image}`
                           : `https://shiksha18.onrender.com/uploads/${college.image}`
                       }
                       className="college-img"
+                      alt="college"
                     />
                   </td>
 
                   <td>{college.name}</td>
                   <td>{college.location}</td>
+
+                  {/* 🔥 STATUS DROPDOWN */}
                   <td>
-                    <span
+                    <select
+                      value={college.status}
+                      onChange={async (e) => {
+                        const newStatus = e.target.value;
+
+                        await axios.put(
+  `https://shiksha18.onrender.com/api/colleges/status/${college._id}`,
+  { status: newStatus }
+);
+
+                        fetchColleges();
+                      }}
                       style={{
-                        color:
+                        padding: "5px 10px",
+                        borderRadius: "6px",
+                        border: "none",
+                        color: "white",
+                        background:
                           college.status === "approved"
-                            ? "green"
+                            ? "#22c55e"
                             : college.status === "pending"
-                              ? "orange"
-                              : "red",
+                            ? "#f59e0b"
+                            : "#ef4444",
                       }}
                     >
-                      {college.status}
-                    </span>
+                      <option value="pending">Pending</option>
+                      <option value="approved">Approved</option>
+                      <option value="rejected">Rejected</option>
+                    </select>
                   </td>
 
-                  <button
-                    onClick={async () => {
-                      await axios.put(
-                        `https://shiksha18.onrender.com/api/colleges/approve/${college._id}`,
-                      );
-                      fetchColleges();
-                    }}
-                    style={{
-                      background: "green",
-                      color: "white",
-                      padding: "5px",
-                    }}
-                  >
-                    Approve
-                  </button>
-
+                  {/* 🔥 ACTION */}
                   <td>
                     <div className="action-buttons">
                       <Link to={`/admin/edit/${college._id}`}>
@@ -111,7 +124,9 @@ function AdminCollegeList() {
 
                       <button
                         className="delete-btn"
-                        onClick={() => deleteCollege(college._id)}
+                        onClick={() =>
+                          deleteCollege(college._id)
+                        }
                       >
                         <FaTrash />
                       </button>

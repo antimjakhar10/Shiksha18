@@ -6,7 +6,7 @@ const College = require("../models/College");
    ✅ IMPORTANT ROUTES (TOP)
 ========================= */
 
-// 🔥 ALL colleges (admin use)
+// ALL colleges (admin)
 router.get("/all", async (req, res) => {
   try {
     const colleges = await College.find().sort({ _id: -1 });
@@ -17,30 +17,37 @@ router.get("/all", async (req, res) => {
   }
 });
 
-// 🔥 ONLY approved (website use)
+// ONLY approved (website)
 router.get("/", async (req, res) => {
   try {
-    const colleges = await College.find({ status: "approved" }).sort({ _id: -1 });
+    const colleges = await College.find({
+      status: "approved",
+    }).sort({ _id: -1 });
     res.json(colleges);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-// 🔥 pending (admin approval)
+// pending (admin)
 router.get("/pending/all", async (req, res) => {
   try {
-    const colleges = await College.find({ status: "pending" });
+    const colleges = await College.find({
+      status: "pending",
+    });
     res.json(colleges);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-// 🔥 user colleges
+// user colleges
 router.get("/user/:userId", async (req, res) => {
   try {
-    const colleges = await College.find({ userId: req.params.userId }).sort({ _id: -1 });
+    const colleges = await College.find({
+      userId: req.params.userId,
+    }).sort({ _id: -1 });
+
     res.json(colleges);
   } catch (err) {
     res.status(500).json(err);
@@ -51,13 +58,15 @@ router.get("/user/:userId", async (req, res) => {
    ➕ ADD / UPDATE / DELETE
 ========================= */
 
-// ADD (user → always pending)
+// ADD
 router.post("/add", async (req, res) => {
   try {
     const college = new College({
       ...req.body,
-      status: "pending",
-      addedBy: "user",
+      status:
+        req.body.addedBy === "admin"
+          ? "approved"
+          : "pending",
     });
 
     await college.save();
@@ -67,7 +76,36 @@ router.post("/add", async (req, res) => {
   }
 });
 
-// UPDATE (again pending)
+
+// DELETE
+router.delete("/:id", async (req, res) => {
+  try {
+    await College.findByIdAndDelete(req.params.id);
+    res.json({ message: "College deleted" });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+/* =========================
+   🔥 STATUS UPDATE (MAIN)
+========================= */
+router.put("/status/:id", async (req, res) => {
+  try {
+    const { status } = req.body;
+
+    await College.findByIdAndUpdate(req.params.id, {
+      status: status,
+    });
+
+    res.json({ message: "Status updated" });
+  } catch (err) {
+    console.log("STATUS ERROR:", err);
+    res.status(500).json(err);
+  }
+});
+
+// UPDATE
 router.put("/:id", async (req, res) => {
   try {
     const updatedCollege = await College.findByIdAndUpdate(
@@ -86,44 +124,8 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// DELETE
-router.delete("/:id", async (req, res) => {
-  try {
-    await College.findByIdAndDelete(req.params.id);
-    res.json({ message: "College deleted" });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
 /* =========================
-   ✅ APPROVAL SYSTEM
-========================= */
-
-router.put("/approve/:id", async (req, res) => {
-  try {
-    await College.findByIdAndUpdate(req.params.id, {
-      status: "approved",
-    });
-    res.json({ message: "Approved" });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-router.put("/reject/:id", async (req, res) => {
-  try {
-    await College.findByIdAndUpdate(req.params.id, {
-      status: "rejected",
-    });
-    res.json({ message: "Rejected" });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-/* =========================
-   🎯 FILTER / STREAM APIs
+   🎯 FILTER APIs
 ========================= */
 
 router.get("/stream/:stream", async (req, res) => {
@@ -149,7 +151,8 @@ router.get("/locations/:stream", async (req, res) => {
 
   colleges.forEach((c) => {
     const parts = c.location?.split(",");
-    const state = parts.length > 1 ? parts[1].trim() : parts[0];
+    const state =
+      parts.length > 1 ? parts[1].trim() : parts[0];
     states.add(state);
   });
 
@@ -157,10 +160,9 @@ router.get("/locations/:stream", async (req, res) => {
 });
 
 /* =========================
-   ⚠️ ALWAYS LAST (IMPORTANT)
+   ⚠️ ALWAYS LAST
 ========================= */
 
-// ❌ dynamic route ALWAYS LAST
 router.get("/:id", async (req, res) => {
   try {
     const college = await College.findById(req.params.id);
