@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import axios from "axios";
 
 const CollegeDetails = () => {
@@ -87,6 +88,32 @@ const CollegeDetails = () => {
 
   return (
     <div className="bg-gray-50 w-full">
+<Helmet>
+  <title>
+  {college?.seoTitle?.trim()
+    ? college.seoTitle
+    : `${college?.name} in ${college?.location} | Shiksha18`}
+</title>
+
+  <meta
+  name="description"
+  content={
+    college?.seoDescription?.trim()
+      ? college.seoDescription
+      : `Explore ${college?.name} in ${college?.location}. Check courses, fees, placements and admission details on Shiksha18.`
+  }
+/>
+
+ <meta
+  name="keywords"
+  content={
+    Array.isArray(college?.seoTags)
+      ? college.seoTags.join(",")
+      : college?.seoTags || `${college?.name}, ${college?.location}, colleges`
+  }
+/>
+</Helmet>
+
       {/* HERO SECTION */}
       <div
         className="relative h-[300px] md:h-[420px] pt-[60px] md:pt-0 bg-cover bg-center flex items-center justify-center"

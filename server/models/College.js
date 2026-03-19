@@ -44,7 +44,9 @@ userId: String,
 image:String,
 images:[String],
 
-
+seoTitle: String,
+seoDescription: String,
+seoTags: [String],
 
 });
 

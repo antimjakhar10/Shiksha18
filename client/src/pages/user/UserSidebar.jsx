@@ -1,71 +1,61 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 function UserSidebar() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     localStorage.removeItem("user");
     navigate("/user/login");
   };
 
+  const menu = [
+    { name: "Dashboard", path: "/user/dashboard", icon: "🏠" },
+    { name: "Add College", path: "/user/add-college", icon: "➕" },
+    { name: "My Colleges", path: "/user/my-colleges", icon: "🎓" },
+    { name: "My Blogs", path: "/user/blogs", icon: "📝" },
+  ];
+
   return (
-    <div className="w-64 min-h-screen bg-white border-r p-6 flex flex-col justify-between">
-      <div>
-        <h2 className="text-2xl font-bold mb-8">User Panel</h2>
+    <div className="h-full bg-white border-r flex flex-col">
 
-        <nav className="flex flex-col gap-2 text-gray-700">
-
-          <Link
-            to="/user/dashboard"
-            className="px-4 py-2 rounded hover:bg-gray-100"
-          >
-            Dashboard
-          </Link>
-
-          <Link
-            to="/user/add-college"
-            className="px-4 py-2 rounded hover:bg-gray-100"
-          >
-            Add College
-          </Link>
-
-          <Link
-            to="/user/my-colleges"
-            className="px-4 py-2 rounded hover:bg-gray-100"
-          >
-            My Colleges
-          </Link>
-
-          <Link
-            to="/user/blogs"
-            className="px-4 py-2 rounded hover:bg-gray-100"
-          >
-            My Blogs
-          </Link>
-
-          <Link
-            to="/user/enquiries"
-            className="px-4 py-2 rounded hover:bg-gray-100"
-          >
-            Enquiries
-          </Link>
-
-          <Link
-            to="/user/saved"
-            className="px-4 py-2 rounded hover:bg-gray-100"
-          >
-            Saved Colleges
-          </Link>
-
-        </nav>
+      {/* LOGO */}
+      <div className="px-6 py-5 border-b">
+        <h2 className="text-xl font-bold text-blue-600">Shiksha18</h2>
+        <p className="text-xs text-gray-400">User Dashboard</p>
       </div>
 
-      <button
-        onClick={handleLogout}
-        className="mt-10 bg-red-500 text-white py-2 rounded hover:bg-red-600"
-      >
-        Logout
-      </button>
+      {/* MENU */}
+      <div className="flex-1 p-4 space-y-1">
+
+        {menu.map((item) => (
+          <Link
+            key={item.path}
+            to={item.path}
+            className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition
+            ${
+              location.pathname === item.path
+                ? "bg-blue-600 text-white shadow-sm"
+                : "text-gray-600 hover:bg-gray-100"
+            }`}
+          >
+            <span className="text-lg">{item.icon}</span>
+            {item.name}
+          </Link>
+        ))}
+
+      </div>
+
+      {/* LOGOUT */}
+      <div className="p-4 border-t">
+        <button
+          onClick={handleLogout}
+          className="w-full bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-lg text-sm transition"
+        >
+          Logout
+        </button>
+      </div>
+
     </div>
   );
 }

@@ -1,50 +1,57 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 function UserDashboard() {
   const [blogs, setBlogs] = useState([]);
-  const [saved, setSaved] = useState([]);
-  const [enquiries, setEnquiries] = useState([]);
+  const [myColleges, setMyColleges] = useState([]);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user") || "null");
-
-    if (!user) {
-      return <div>Please login again</div>;
-    }
+    if (!user) return;
 
     fetch(`https://shiksha18.onrender.com/api/blogs/user/${user.id}`)
       .then((res) => res.json())
       .then((data) => setBlogs(data));
 
-    fetch(`https://shiksha18.onrender.com/api/enquiries/user/${user.id}`)
-      .then((res) => res.json())
-      .then((data) => setEnquiries(data));
+    
 
-    fetch(`https://shiksha18.onrender.com/api/saved/user/${user.id}`)
+    // 🔥 NEW API
+    fetch(`https://shiksha18.onrender.com/api/colleges/user/${user.id}`)
       .then((res) => res.json())
-      .then((data) => setSaved(data));
+      .then((data) => setMyColleges(data));
   }, []);
 
   return (
-    <div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded shadow">
-          <h3 className="text-xl font-semibold">My Blogs</h3>
+    <div className="space-y-6">
 
-          <p className="text-3xl mt-4 text-blue-600">{blogs.length}</p>
+      {/* HEADING */}
+      <div>
+        <h2 className="text-2xl font-semibold text-gray-800">
+          Dashboard Overview
+        </h2>
+        <p className="text-sm text-gray-500">
+          Track your activity and performance
+        </p>
+      </div>
+
+      {/* CARDS */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        {/* BLOGS */}
+        <div className="bg-white p-6 rounded-xl border shadow-sm hover:shadow-md transition">
+          <p className="text-sm text-gray-500">My Blogs</p>
+          <h3 className="text-3xl font-bold mt-2 text-blue-600">
+            {blogs.length}
+          </h3>
         </div>
 
-        <div className="bg-white p-6 rounded shadow">
-          <h3 className="text-xl font-semibold">Saved Colleges</h3>
+        
 
-          <p className="text-3xl mt-4 text-green-600">{saved.length}</p>
-        </div>
-
-        <div className="bg-white p-6 rounded shadow">
-          <h3 className="text-xl font-semibold">Enquiries</h3>
-
-          <p className="text-3xl mt-4 text-purple-600">{enquiries.length}</p>
+        {/* 🔥 NEW CARD */}
+        <div className="bg-white p-6 rounded-xl border shadow-sm hover:shadow-md transition">
+          <p className="text-sm text-gray-500">My Colleges</p>
+          <h3 className="text-3xl font-bold mt-2 text-orange-600">
+            {myColleges.length}
+          </h3>
         </div>
 
       </div>

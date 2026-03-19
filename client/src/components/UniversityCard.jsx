@@ -63,39 +63,7 @@ const UniversityCard = ({ uni }) => {
               <i className="fa-solid fa-phone"></i>
             </button>
 
-            {/* ❤️ SAVE BUTTON */}
-
-            <button
-              onClick={async (e) => {
-                e.stopPropagation();
-
-                const user = JSON.parse(localStorage.getItem("user"));
-
-                if (!user) {
-                  alert("Login first");
-                  return;
-                }
-
-                await fetch("https://shiksha18.onrender.com/api/saved/save", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-
-                  body: JSON.stringify({
-                    userId: user.id,
-                    collegeId: uni._id,
-                    collegeName: uni.name,
-                    image: uni.image,
-                  }),
-                });
-
-                alert("College saved ❤️");
-              }}
-              className="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600 transition"
-            >
-              <i className="fa-solid fa-heart"></i>
-            </button>
+            
           </div>
         </div>
       </div>

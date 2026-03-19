@@ -29,8 +29,7 @@ import UserLogin from "./pages/user/UserLogin";
 import UserDashboard from "./pages/user/UserDashboard";
 import UserLayout from "./pages/user/UserLayout";
 import UserBlogs from "./pages/user/UserBlogs";
-import SavedColleges from "./pages/user/SavedColleges";
-import UserEnquiries from "./pages/user/UserEnquiries";
+
 import UserRegister from "./pages/user/UserRegister";
 import AdminLocations from "./pages/admin/AdminLocations";
 import UserAddCollege from "./pages/user/UserAddCollege";
@@ -66,9 +65,9 @@ function App() {
 
           <Route path="blogs" element={<UserBlogs />} />
 
-          <Route path="saved" element={<SavedColleges />} />
+          
 
-          <Route path="enquiries" element={<UserEnquiries />} />
+      
           <Route path="add-college" element={<UserAddCollege />} />
           <Route path="edit/:id" element={<EditCollege />} />
           <Route path="my-colleges" element={<UserMyColleges />} />

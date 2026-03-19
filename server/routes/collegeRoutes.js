@@ -112,7 +112,7 @@ router.put("/:id", async (req, res) => {
       req.params.id,
       {
         ...req.body,
-        status: "pending",
+        status: req.body.status || "pending", // ✅ FIX
       },
       { new: true }
     );
