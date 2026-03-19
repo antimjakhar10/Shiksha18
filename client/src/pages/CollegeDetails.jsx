@@ -288,46 +288,48 @@ ${activeImage === img ? "border-blue-600 scale-105" : "border-gray-300"}`}
 
           {/* PLACEMENTS */}
           <div className="bg-white rounded-2xl shadow-sm p-6 md:p-8 overflow-hidden">
-  <h2 className="text-xl md:text-2xl font-bold mb-6 text-center">
-    Our Placement Partners
-  </h2>
+            <h2 className="text-xl md:text-2xl font-bold mb-6 text-center">
+              Our Placement Partners
+            </h2>
 
-  <div className="space-y-6">
+            <div className="space-y-6">
+              {/* ROW 1 */}
+              <div className="flex gap-6 whitespace-nowrap animate-scroll">
+                {[...college.placements, ...college.placements].map(
+                  (company, index) => (
+                    <div
+                      key={index}
+                      className="min-w-[120px] h-[70px] bg-white border rounded-lg flex items-center justify-center shadow"
+                    >
+                      <img
+                        src={`https://shiksha18.onrender.com${company.logo}`}
+                        alt={company.name}
+                        className="h-8 object-contain"
+                      />
+                    </div>
+                  ),
+                )}
+              </div>
 
-    {/* ROW 1 */}
-    <div className="flex gap-6 whitespace-nowrap animate-scroll">
-      {[...college.placements, ...college.placements].map((company, index) => (
-        <div
-          key={index}
-          className="min-w-[120px] h-[70px] bg-white border rounded-lg flex items-center justify-center shadow"
-        >
-          <img
-            src={`https://shiksha18.onrender.com${company.logo}`}
-            alt={company.name}
-            className="h-8 object-contain"
-          />
-        </div>
-      ))}
-    </div>
-
-    {/* ROW 2 */}
-    <div className="flex gap-6 whitespace-nowrap animate-scroll-reverse">
-      {[...college.placements, ...college.placements].map((company, index) => (
-        <div
-          key={index}
-          className="min-w-[120px] h-[70px] bg-white border rounded-lg flex items-center justify-center shadow"
-        >
-          <img
-            src={`https://shiksha18.onrender.com${company.logo}`}
-            alt={company.name}
-            className="h-8 object-contain"
-          />
-        </div>
-      ))}
-    </div>
-
-  </div>
-</div>
+              {/* ROW 2 */}
+              <div className="flex gap-6 whitespace-nowrap animate-scroll-reverse">
+                {[...college.placements, ...college.placements].map(
+                  (company, index) => (
+                    <div
+                      key={index}
+                      className="min-w-[120px] h-[70px] bg-white border rounded-lg flex items-center justify-center shadow"
+                    >
+                      <img
+                        src={`https://shiksha18.onrender.com${company.logo}`}
+                        alt={company.name}
+                        className="h-8 object-contain"
+                      />
+                    </div>
+                  ),
+                )}
+              </div>
+            </div>
+          </div>
 
           {/* FEES STRUCTURE */}
           <div className="bg-white rounded-2xl shadow-sm p-8">
@@ -510,9 +512,8 @@ ${activeImage === img ? "border-blue-600 scale-105" : "border-gray-300"}`}
         </div>
       </section>
 
-
-       <style>
-{`
+      <style>
+        {`
 @keyframes scroll {
   0% { transform: translateX(0%); }
   100% { transform: translateX(-50%); }
@@ -526,13 +527,9 @@ ${activeImage === img ? "border-blue-600 scale-105" : "border-gray-300"}`}
   animation: scroll 35s linear infinite reverse;
 }
 `}
-</style>
+      </style>
     </div>
-
-    
-    
   );
-  
 };
 
 export default CollegeDetails;

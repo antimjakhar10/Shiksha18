@@ -3,7 +3,7 @@ import axios from "axios";
 import "./FormLayout.css";
 import "./AddCollege.css";
 
-function AddCollege() {
+function AddCollege({ isAdmin = false }) {
 
 const [streams,setStreams] = useState([]);
 const [courses,setCourses] = useState([]);
@@ -220,7 +220,16 @@ fees: college.fees,
 images: college.images
 };
 
-await axios.post("https://shiksha18.onrender.com/api/colleges/add", formattedData);
+const user = JSON.parse(localStorage.getItem("user"));
+
+console.log("USER:", user);
+
+await axios.post("https://shiksha18.onrender.com/api/colleges/add", {
+  ...formattedData,
+  status: isAdmin ? "approved" : "pending",
+  addedBy: isAdmin ? "admin" : "user",
+  userId: user?.id || user?._id
+});
 
 alert("College Added Successfully");
 

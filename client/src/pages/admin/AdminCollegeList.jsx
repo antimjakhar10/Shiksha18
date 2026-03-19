@@ -13,7 +13,7 @@ function AdminCollegeList() {
   }, []);
 
   const fetchColleges = async () => {
-    const res = await axios.get("https://shiksha18.onrender.com/api/colleges");
+    const res = await axios.get("https://shiksha18.onrender.com/api/colleges/all")
     setColleges(res.data);
   };
 
@@ -40,58 +40,87 @@ function AdminCollegeList() {
 
       <div className="table-wrapper">
         <table className="college-table">
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Location</th>
-            <th>Stream</th>
-            <th>Action</th>
-          </tr>
-        </thead>
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Location</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          {colleges
-            .filter((college) =>
-              college.name.toLowerCase().includes(search.toLowerCase()),
-            )
-            .map((college) => (
-              <tr key={college._id}>
-                <td>
-                  <img
-                    src={
-                      college.image.startsWith("/uploads")
-                        ? `https://shiksha18.onrender.com${college.image}`
-                        : `https://shiksha18.onrender.com/uploads/${college.image}`
-                    }
-                    className="college-img"
-                  />
-                </td>
+          <tbody>
+            {colleges
+              .filter((college) =>
+                college.name.toLowerCase().includes(search.toLowerCase()),
+              )
+              .map((college) => (
+                <tr key={college._id}>
+                  <td>
+                    <img
+                      src={
+                        college.image && college.image.startsWith("/uploads")
+                          ? `https://shiksha18.onrender.com${college.image}`
+                          : `https://shiksha18.onrender.com/uploads/${college.image}`
+                      }
+                      className="college-img"
+                    />
+                  </td>
 
-                <td>{college.name}</td>
-                <td>{college.location}</td>
-                <td>{college.stream}</td>
-
-                <td>
-                  <div className="action-buttons">
-                    <Link to={`/admin/edit/${college._id}`}>
-                      <button className="edit-btn">
-                        <FaEdit />
-                      </button>
-                    </Link>
-
-                    <button
-                      className="delete-btn"
-                      onClick={() => deleteCollege(college._id)}
+                  <td>{college.name}</td>
+                  <td>{college.location}</td>
+                  <td>
+                    <span
+                      style={{
+                        color:
+                          college.status === "approved"
+                            ? "green"
+                            : college.status === "pending"
+                              ? "orange"
+                              : "red",
+                      }}
                     >
-                      <FaTrash />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+                      {college.status}
+                    </span>
+                  </td>
+
+                  <button
+                    onClick={async () => {
+                      await axios.put(
+                        `https://shiksha18.onrender.com/api/colleges/approve/${college._id}`,
+                      );
+                      fetchColleges();
+                    }}
+                    style={{
+                      background: "green",
+                      color: "white",
+                      padding: "5px",
+                    }}
+                  >
+                    Approve
+                  </button>
+
+                  <td>
+                    <div className="action-buttons">
+                      <Link to={`/admin/edit/${college._id}`}>
+                        <button className="edit-btn">
+                          <FaEdit />
+                        </button>
+                      </Link>
+
+                      <button
+                        className="delete-btn"
+                        onClick={() => deleteCollege(college._id)}
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

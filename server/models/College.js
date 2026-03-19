@@ -29,6 +29,18 @@ amount:String
 }
 ],
 
+status: {
+  type: String,
+  enum: ["pending", "approved", "rejected"],
+  default: "pending"
+},
+
+addedBy: {
+  type: String, // "admin" ya "user"
+  default: "admin"
+},
+userId: String,
+
 image:String,
 images:[String],
 

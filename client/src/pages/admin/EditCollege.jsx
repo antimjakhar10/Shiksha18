@@ -4,7 +4,7 @@ import axios from "axios";
 import "./FormLayout.css";
 import "./EditCollege.css";
 
-function EditCollege() {
+function EditCollege({ isAdmin = false }) {
   const [streams, setStreams] = useState([]);
   const [courses, setCourses] = useState([]);
   const [facilities, setFacilities] = useState([]);
@@ -250,7 +250,10 @@ isTop: college.isTop
 
 console.log("DATA SENT:", formattedData);
 
-await axios.put(`https://shiksha18.onrender.com/api/colleges/${id}`, formattedData);
+await axios.put(`https://shiksha18.onrender.com/api/colleges/${id}`, {
+  ...formattedData,
+  status: isAdmin ? "approved" : "pending"
+});
 
 alert("University updated successfully");
 

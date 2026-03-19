@@ -36,9 +36,7 @@ function UserBlogs() {
         </div>
       ) : (
         <div className="bg-white rounded-xl shadow overflow-x-auto">
-
           <table className="min-w-[800px] w-full text-left">
-
             {/* HEADER */}
             <thead className="bg-gray-100">
               <tr>
@@ -53,14 +51,12 @@ function UserBlogs() {
             {/* BODY */}
             <tbody>
               {blogs.map((blog) => {
-
                 const imageUrl = blog.image?.startsWith("/uploads")
                   ? `https://shiksha18.onrender.com${blog.image}`
                   : `https://shiksha18.onrender.com/uploads/${blog.image}`;
 
                 return (
                   <tr key={blog._id} className="border-t hover:bg-gray-50">
-
                     {/* IMAGE */}
                     <td className="p-3">
                       <img
@@ -71,9 +67,7 @@ function UserBlogs() {
                     </td>
 
                     {/* TITLE */}
-                    <td className="p-3 font-medium">
-                      {blog.title}
-                    </td>
+                    <td className="p-3 font-medium">{blog.title}</td>
 
                     {/* STATUS */}
                     <td className="p-3">
@@ -110,12 +104,10 @@ function UserBlogs() {
                         View
                       </button>
                     </td>
-
                   </tr>
                 );
               })}
             </tbody>
-
           </table>
         </div>
       )}

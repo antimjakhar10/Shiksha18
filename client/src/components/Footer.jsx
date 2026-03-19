@@ -3,144 +3,81 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/f
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0f172a] text-gray-300 pt-16 pb-8 mt-20">
-      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
+    <footer className="bg-[#0b1220] text-gray-300 pt-14 pb-6 mt-20">
 
-        {/* Logo & About */}
-        <div>
-          <Link to="/">
+      <div className="max-w-7xl mx-auto px-6">
+
+        {/* Top Section */}
+        <div className="grid md:grid-cols-3 gap-10 text-center md:text-left items-start">
+
+          {/* LEFT */}
+          <div className="md:pr-16">
             <h2 className="text-2xl font-bold text-white mb-4">
               Shiksha <span className="text-green-500">18</span>
             </h2>
-          </Link>
 
-          <p className="text-sm leading-6">
-            Helping students choose the right college and build a brighter future.
-            We simplify your admission journey step by step.
-          </p>
+            <p className="text-sm leading-6">
+              Helping students choose the right college and build a brighter future.
+              We simplify your admission journey step by step.
+            </p>
 
-          {/* Social Icons */}
-          <div className="flex gap-4 mt-6">
-            <div className="bg-gray-700 p-2 rounded-full hover:bg-green-500 transition cursor-pointer">
-              <FaFacebookF size={14} />
-            </div>
-            <div className="bg-gray-700 p-2 rounded-full hover:bg-green-500 transition cursor-pointer">
-              <FaTwitter size={14} />
-            </div>
-            <div className="bg-gray-700 p-2 rounded-full hover:bg-green-500 transition cursor-pointer">
-              <FaInstagram size={14} />
-            </div>
-            <div className="bg-gray-700 p-2 rounded-full hover:bg-green-500 transition cursor-pointer">
-              <FaLinkedinIn size={14} />
+            {/* Social Icons */}
+            <div className="flex justify-center md:justify-start gap-3 mt-5">
+              {[FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn].map((Icon, i) => (
+                <div
+                  key={i}
+                  className="bg-gray-700 p-2 rounded-full hover:bg-green-500 transition cursor-pointer"
+                >
+                  <Icon size={14} />
+                </div>
+              ))}
             </div>
           </div>
+
+          {/* CENTER */}
+          <div className="md:px-20">
+            <h3 className="text-white font-semibold mb-4">Quick Links</h3>
+
+            <ul className="space-y-2 text-sm">
+              {[
+                { name: "Home", path: "/" },
+                { name: "Universities", path: "/universities" },
+                { name: "Colleges", path: "/colleges" },
+                { name: "Blogs", path: "/blogs" },
+                { name: "Contact", path: "/contact" },
+              ].map((link, i) => (
+                <li key={i}>
+                  <Link
+                    to={link.path}
+                    className="hover:text-green-400 transition"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* RIGHT */}
+          <div className="md:pl-13">
+            <h3 className="text-white font-semibold mb-4">Contact Us</h3>
+
+            <div className="space-y-3 text-sm">
+              <p>📍 Office No. 531, Mandi, Himachal Pradesh</p>
+              <p>📞 +91 9857002222</p>
+              <p>📧 support@shiksha18.com</p>
+            </div>
+          </div>
+
         </div>
 
-        {/* Quick Links */}
-        <div>
-          <h3 className="text-white font-semibold mb-4">Quick Links</h3>
-          <ul className="space-y-2 text-sm">
-
-            <li>
-              <Link to="/" className="hover:text-green-400">
-                Home
-              </Link>
-            </li>
-
-            <li>
-              <Link to="/universities" className="hover:text-green-400">
-                Universities
-              </Link>
-            </li>
-
-            <li>
-              <Link to="/courses" className="hover:text-green-400">
-                Courses
-              </Link>
-            </li>
-
-            <li>
-              <Link to="/exams" className="hover:text-green-400">
-                Exams
-              </Link>
-            </li>
-
-            <li>
-              <Link to="/contact" className="hover:text-green-400">
-                Contact
-              </Link>
-            </li>
-
-          </ul>
-        </div>
-
-        {/* Top Streams */}
-        <div>
-          <h3 className="text-white font-semibold mb-4">Top Streams</h3>
-          <ul className="space-y-2 text-sm">
-
-            <li>
-              <Link
-                to="/universities?stream=engineering"
-                className="hover:text-green-400"
-              >
-                Engineering
-              </Link>
-            </li>
-
-            <li>
-              <Link
-                to="/universities?stream=management"
-                className="hover:text-green-400"
-              >
-                Management
-              </Link>
-            </li>
-
-            <li>
-              <Link
-                to="/universities?stream=medical"
-                className="hover:text-green-400"
-              >
-                Medical
-              </Link>
-            </li>
-
-            <li>
-              <Link
-                to="/universities?stream=law"
-                className="hover:text-green-400"
-              >
-                Law
-              </Link>
-            </li>
-
-            <li>
-              <Link
-                to="/universities?stream=design"
-                className="hover:text-green-400"
-              >
-                Design
-              </Link>
-            </li>
-
-          </ul>
-        </div>
-
-        {/* Contact Info */}
-        <div>
-          <h3 className="text-white font-semibold mb-4">Contact Us</h3>
-          <p className="text-sm mb-2">📍 Office N0. 531, Mandi, Himachal Pradesh</p>
-          <p className="text-sm mb-2">📞 +91 9857002222</p>
-          <p className="text-sm">📧 support@shiksha18.com</p>
+        {/* Bottom */}
+        <div className="border-t border-gray-700 mt-10 pt-5 text-center text-sm text-gray-400">
+          © {new Date().getFullYear()} Shiksha18. All rights reserved.
         </div>
 
       </div>
 
-      {/* Bottom Line */}
-      <div className="border-t border-gray-700 mt-12 pt-6 text-center text-sm text-gray-400">
-        © {new Date().getFullYear()} Shiksha18. All rights reserved.
-      </div>
     </footer>
   );
 };
